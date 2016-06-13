@@ -14,13 +14,18 @@ username=$(jq -r '.source.username // ""' < $payload)
 password=$(jq -r '.source.password // ""' < $payload)
 pipeline=$(jq -r '.source.pipeline // ""' < $payload)
 job=$(jq -r '.source.job // ""' < $payload)
+curr_ref=$(jq -r '.version.ref // ""' < $payload)
+echo $curr_ref
 
 echo -e "$username\n$password\n" | fly -t savannah login --concourse-url $concourse_url
 fly -t savannah builds -j $pipeline/$job > $pipeline.$job.txt
 
 line=$(head -n 1 $pipeline.$job.txt)
 ref=$(echo $line | cut -d " " -f 3)
+echo $ref
+
 status=$(echo $line | cut -d " " -f 4)
+echo $status
 
 if [[ $status = "started" ]]
 then
