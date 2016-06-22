@@ -8,6 +8,6 @@ RUN git config --global user.name "Ivan Vojinovic" \
  && git config --global user.email "ivan.vojinovic@hs2solutions.com"
 
 ADD assets/ /opt/resource/
-ADD fly-lynux /usr/local/bin/fly
+ADD fly-lynux-1.3.1 /usr/local/bin/fly
 RUN chmod +x /opt/resource/*
 RUN chmod +x /usr/local/bin/fly
